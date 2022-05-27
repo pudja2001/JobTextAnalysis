@@ -6,12 +6,10 @@ from collections import defaultdict
 from collections import  Counter
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
-stop=set(stopwords.words('english'))
 import re
 from nltk.tokenize import word_tokenize
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import gensim
-import string
 import pandas as pd
 import numpy as np
 import seaborn as sns

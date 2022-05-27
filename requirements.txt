@@ -10,4 +10,3 @@ seaborn==0.11.1
 bs4==0.0.1
 altair==4.2.0
 plotly==5.8.0
-tkinter==8.6.10

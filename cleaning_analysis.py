@@ -2,7 +2,6 @@ import warnings
 warnings.simplefilter(action='ignore')
 from nltk.corpus import stopwords
 from nltk.util import ngrams
-from sklearn.feature_extraction.text import CountVectorizer
 from collections import defaultdict
 from collections import  Counter
 import matplotlib.pyplot as plt

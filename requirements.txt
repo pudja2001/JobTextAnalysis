@@ -1,4 +1,12 @@
-streamlit==0.61.0
-pandas==0.25.3
-numpy==1.18.1
-scikit-learn==0.22.1
+streamlit==1.9.0
+pandas==1.4.2
+numpy==1.20.1
+nltk==3.6.1
+matplotlib==3.5.2
+re==2021.4.4
+wordcloud==1.8.1
+gensim==4.2.0
+seaborn==0.11.1
+bs4==0.0.1
+altair==4.2.0
+plotly==5.8.0

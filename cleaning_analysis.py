@@ -7,9 +7,7 @@ from collections import  Counter
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 import re
-from nltk.tokenize import word_tokenize
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-import gensim
 import pandas as pd
 import numpy as np
 import seaborn as sns

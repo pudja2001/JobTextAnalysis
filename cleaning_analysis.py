@@ -1,4 +1,3 @@
-from turtle import color
 import warnings
 warnings.simplefilter(action='ignore')
 from nltk.corpus import stopwords

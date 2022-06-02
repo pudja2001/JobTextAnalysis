@@ -57,8 +57,7 @@ def clean_text(text):
     
     return text
 
-def gen_wordcloud(df, position='All'):
-    dfNew = df
+def gen_wordcloud(position='All'):
     if position == 'All':
         words_per_jobdesc = dfNew["JobDesc"]
     else:
@@ -75,10 +74,11 @@ def gen_wordcloud(df, position='All'):
     jobdesc = [" ".join(text) for text in all_jobdesc]
     final_jobdesc = " ".join(jobdesc)
     
-    wordcloud_jobdesc = WordCloud(background_color="black").generate(final_jobdesc)
+    wordcloud_jobdesc = WordCloud(background_color="white").generate(final_jobdesc)
 
-    plt.figure(figsize = (20,20))
+    plt.figure(figsize = (10,10))
     plt.imshow(wordcloud_jobdesc, interpolation='None')
+    plt.title("{} Job Description WordCloud".format(position))
     plt.axis("off")
     plt.show()
 

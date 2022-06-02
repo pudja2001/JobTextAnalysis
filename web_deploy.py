@@ -89,7 +89,7 @@ with eda:
     # Wordcloud
     st.markdown("**Wordcloud of {} Positions**".format(position))
     st.set_option('deprecation.showPyplotGlobalUse', False)
-    st.pyplot(cleaning_analysis.gen_wordcloud(df, position))
+    st.pyplot(cleaning_analysis.gen_wordcloud(df, position), clear_figure=True)
 
 
 

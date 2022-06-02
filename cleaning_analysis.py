@@ -66,6 +66,7 @@ def gen_wordcloud(df, position='All'):
     all_jobdesc = []
 
     for row in words_per_jobdesc:
+        row = row.split()
         row = np.array(row)
         mask = row != ''
         row = row[mask]

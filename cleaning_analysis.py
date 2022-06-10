@@ -57,11 +57,11 @@ def clean_text(text):
     
     return text
 
-def gen_wordcloud(position='All'):
+def gen_wordcloud(df, position='All'):
     if position == 'All':
-        words_per_jobdesc = dfNew["JobDesc"]
+        words_per_jobdesc = df["JobDesc"]
     else:
-        words_per_jobdesc = dfNew[dfNew["JobTitle"].str.contains(position)]["JobDesc"]
+        words_per_jobdesc = df[df["JobTitle"].str.contains(position)]["JobDesc"]
     all_jobdesc = []
 
     for row in words_per_jobdesc:

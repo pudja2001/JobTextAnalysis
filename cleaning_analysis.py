@@ -12,7 +12,6 @@ from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import pandas as pd
 import numpy as np
 import seaborn as sns
-import spacy
 import gensim
 from gensim import corpora
 from gensim.utils import simple_preprocess

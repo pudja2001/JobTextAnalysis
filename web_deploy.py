@@ -10,6 +10,7 @@ header = st.container()
 dataset = st.container()
 eda = st.container()
 features = st.container()
+tmodelling = st.container()
 
 # Read the Data and cleaning the data
 df = pd.read_csv("datajobs.csv")
@@ -24,6 +25,7 @@ list_company.insert(0, "All")
 title_sidebar = st.sidebar.title("Positions and Company you wanna see")
 position = st.sidebar.selectbox('Choose the Positions!', pos_list)
 company = st.sidebar.selectbox('Choose the Company!', list_company)
+num_topic = st.sidebar.number_input('Number of Topics :', min_value=1, max_value=10, value=3, step=1)
 
 with header:
     st.title("Text Analysis on Data Field Job in indeed.com")
@@ -91,5 +93,14 @@ with eda:
     st.set_option('deprecation.showPyplotGlobalUse', False)
     st.pyplot(cleaning_analysis.gen_wordcloud(df, position), clear_figure=True)
 
+with tmodelling:
+    st.title("Topic Modelling on Data Job Description")
+    st.markdown("After some EDA, I try to do topic modelling with LDA (Latent Dirichlet Allocation) to get know better about what topic is posted and required for data position")
+    # Make LDA Topic Modelling Model
+    docs = cleaning_analysis.generate_docs(df, 'JobDesc', position)
+    lda_model, id2word, corpus = cleaning_analysis.train_model(docs, num_topic)
 
-
+    # Make wordcloud on N topics
+    st.markdown("**Wordcloud of {} topics on {} Job Description Positions**".format(num_topic, position))
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    st.pyplot(cleaning_analysis.gen_wordcloud_tmodelling(num_topic, lda_model), clear_figure=True)

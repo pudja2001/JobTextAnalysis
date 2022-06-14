@@ -5,12 +5,17 @@ from nltk.util import ngrams
 from collections import defaultdict
 from collections import  Counter
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 plt.style.use('ggplot')
 import re
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import spacy
+import gensim
+from gensim import corpora
+from gensim.utils import simple_preprocess
 
 # Convert PostDate Format into Datetime
 def convertpostDate(df):
@@ -56,6 +61,63 @@ def clean_text(text):
     text = re.sub(r"donå«t", "do not", text)
     
     return text
+
+def denoise_docs(df, text_column):
+    texts = df[text_column].values.tolist()
+    docs = [[w for w in simple_preprocess(doc, deacc=True) if w not in stopwords.words('english')] for doc in texts]
+    return docs
+
+def generate_docs(df: pd.DataFrame, text_column: str, pos: str = 'All', ngrams: str = None):
+    if pos == 'All':
+        docs = denoise_docs(df, text_column)
+    else:
+        texts_df2 = df[df['JobTitle'].str.contains(pos)]
+        docs = denoise_docs(texts_df2, text_column)
+
+    return docs
+
+def prepare_training_data(docs):
+    id2word = corpora.Dictionary(docs)
+    corpus = [id2word.doc2bow(doc) for doc in docs]
+    return id2word, corpus
+
+
+def train_model(docs, num_topics: int = 3, per_word_topics: bool = True):
+    id2word, corpus = prepare_training_data(docs)
+    model = gensim.models.LdaModel(corpus=corpus, id2word=id2word, num_topics=num_topics, per_word_topics=per_word_topics)
+    return model, id2word, corpus
+
+
+def gen_wordcloud_tmodelling(numTopics, lda_model):
+    cols = [color for name, color in mcolors.TABLEAU_COLORS.items()]  # more colors: 'mcolors.XKCD_COLORS'
+
+    cloud = WordCloud(background_color='white',
+                      width=2500,
+                      height=1800,
+                      max_words=25,
+                      colormap='tab10',
+                      color_func=lambda *args, **kwargs: cols[i],
+                      prefer_horizontal=1.0)
+
+    topics = lda_model.show_topics(formatted=False)
+
+    fig, axes = plt.subplots(numTopics, 1, figsize=(6,17), sharex=True, sharey=True)
+
+    for i, ax in enumerate(axes.flatten()):
+        fig.add_subplot(ax)
+        topic_words = dict(topics[i][1])
+        cloud.generate_from_frequencies(topic_words, max_font_size=300)
+        plt.gca().imshow(cloud)
+        plt.gca().set_title('Topic ' + str(i+1), fontdict=dict(size=16))
+        plt.gca().axis('off')
+
+
+    plt.subplots_adjust(wspace=0, hspace=0)
+    plt.axis('off')
+    plt.margins(x=0, y=0)
+    plt.tight_layout()
+    plt.show()
+
 
 def gen_wordcloud(df, position='All'):
     if position == 'All':

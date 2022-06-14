@@ -191,6 +191,7 @@ def generate_ngrams_bar(df, position='All', n_gram=1):
     
     return dfNew_jobdesc_ngrams
 
+
 def JobsOpenedOverTime(df, position="All"):
     dfNew = df
     fig = plt.figure(figsize=(10,7))

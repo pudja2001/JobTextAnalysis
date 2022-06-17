@@ -4,4 +4,4 @@ This Project is made by myself to learn web scraping, EDA, doing text cleaning, 
 
 You can look the website here : https://job-text-analysis.herokuapp.com/. 
 
-**Note** : if the website is error, you can run `streamlit run web_deploy.py` on your terminal. Make sure the libraries on your local have same versions with the versions on **requirements.txt** file.
+**Note** : if the website is error, you can run `streamlit run web_deploy.py` on your terminal. Make sure the libraries on your local have same versions with the versions in **requirements.txt** file.
